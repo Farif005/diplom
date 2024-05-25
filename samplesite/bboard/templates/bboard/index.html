@@ -1,28 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная :: Доска объявлений</title>
+    <link rel="stylesheet" href="{% static 'bboard/style.css' %}">
 </head>
 <body>
-    <h1>Объявления</h1>
-    <div>
-        <a href="{% url 'index' %}">Главная</a>
-        <a href="{% url 'add' %}">Добавить</a>
-        {% for rubric in rubrics %}
-        <a href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
-        {% endfor %}
+    <div class="header">    
+        <h1 class="header_title" >ИнгТорговля</h1>
+        <div class="nav">
+            <div class="glava">
+                <a href="{% url 'index' %}" class="glava_text">Главная</a>
+                <a href="{% url 'add' %}" class="glava_text">Добавить</a>
+            </div>
+            <div class="header_links">
+                {% for rubric in rubrics %}
+                <a class="rubric_link" href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
-    {% for bb in bbs %}
+    
     <div>
-        <h2>{{ bb.title }}</h2>
-        <p>{{ bb.content }}</p>
-        <p><a href="/bboard/{{ bb.rubric.pk }}">{{ bb.rubric.name }}</a></p>
-        <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
-            
+        <ul class="item">
+            {% for bb in bbs %}
+            <li class="item_list">
+                <div>
+                    <h2 class="card_name">{{ bb.title }}</h2>
+                    <p><a href="/bboard/{{ bb.rubric.pk }}">{{ bb.rubric.name }}</a></p>
+                </div>
+
+                <img src="{{ bb.image.url }}" alt="Ошибка при загрузки фотографии">
+                <div class="item_data">
+                    <p>Тел.: {{ bb.phone }}</p>
+                    <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+                    <p>Просмотры: {{ bb.views }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        
     </div>
-    {% endfor %}
 </body>
 </html>

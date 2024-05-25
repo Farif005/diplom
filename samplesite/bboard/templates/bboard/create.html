@@ -1,24 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Добавление объявления :: Доска объявлений</title>
+    <link rel="stylesheet" href="{% static 'bboard/style.css' %}">
 </head>
 <body>
-    <h1>Добавление объявления</h1>
-    <div>
-        <a href="{% url 'index' %}">Главная</a>
-        {% for rubric in rubrics %}
-        <a href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
-        {% endfor %}
+    <div class="header">    
+        <h1 class="header_title" >ИнгТорговля</h1>
+        <div class="nav">
+            <div class="glava">
+                <a href="{% url 'index' %}" class="glava_text">Главная</a>
+                <a href="{% url 'add' %}" class="glava_text">Добавить</a>
+            </div>
+            <div class="header_links">
+                {% for rubric in rubrics %}
+                <a class="rubric_link" href="{% url 'by_rubric' rubric.pk %}">{{ rubric.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="header_form">
+        <h1 class="form_title">Добавление объявления</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p class="form_text">Товар:</p>
+            <p>{{ form.title }}</p>
+            <p class="form_text">Описание:</p>
+            <p>{{ form.content }}</p>
+            <p class="form_text">Цена:</p>
+            <p>{{ form.price }}</p>
+            <p class="form_text">Фотография:</p>
+            <p>{{ form.image }}</p>
+            <p class="form_text">Рубрика:</p>
+            <p>{{ form.rubric }}</p>
+            <p class="form_text">Номер телефона:</p>
+            <p>{{ form.phone }}</p>
+            <button type="submit">Добавить</button>
+        </form>
     </div>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
-    </form>
-
+    
 </body>
 </html>
+
