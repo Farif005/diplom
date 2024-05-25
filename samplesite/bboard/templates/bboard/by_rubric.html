@@ -33,8 +33,10 @@
                 <img class="by_img" src="{{ bb.image.url }}" alt="Ошибка при загрузки фотографии">
                 <div class="by_context">
                     <p>Тел.: {{ bb.phone }}</p>
+                    <p>Цена: {{ bb.price }}</p>
                     <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
                 </div>
+                <hr>
             </li>
             {% endfor %}
         </ul>
